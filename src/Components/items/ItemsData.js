@@ -11,15 +11,19 @@ const ItemsData = (props) => {
   };
 
   const AddItemsHandler = () => {
-    ctxCart.addTotal(+AmountNo);
-    setAmountNo("1");
-    const mealData = {
-      id : props.id,
-      name: props.name,
-      price: props.price,
-      amount: +AmountNo
+    if(+AmountNo.trim().length === 0 || +AmountNo <= 0){
+      return setAmountNo("1");
     }
-    ctxCart.dataHandler(mealData);
+    
+      ctxCart.addTotal(+AmountNo);
+      setAmountNo("1");
+      const mealData = {
+        id : props.id,
+        name: props.name,
+        price: props.price,
+        amount: +AmountNo
+    }
+      ctxCart.dataHandler(mealData);
   };
   
   return (

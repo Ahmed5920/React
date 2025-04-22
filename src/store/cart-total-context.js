@@ -43,10 +43,6 @@ export const CartTotalContextProvider = (props) => {
     })
   }
 
-    // useEffect(() =>{
-    //   console.log(dataMeal);
-    // },[dataMeal]);
-
   return (
     <CartTotalContext.Provider
       value={{

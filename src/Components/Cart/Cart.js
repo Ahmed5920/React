@@ -11,6 +11,7 @@ const Overlay = (props) =>{
     const[total,setTotal] = useState(0);
     const ctx = useContext(CartTotalContext);
     const meals = ctx.dataMeal;
+    const hasItems = meals.length > 0 ;
 
     useEffect(() =>{
         const totalAmount = meals.reduce((acc,meal) =>
@@ -45,8 +46,8 @@ const Overlay = (props) =>{
                                     </div>
                                 </div>
                                 <div className={classes.buttons}>
-                                    <button onClick={() => {decreaseHandler(meal.id)}}>-</button>
-                                    <button onClick={() => {increaseHandler(meal.id)}}>+</button>
+                                    <button onClick={decreaseHandler.bind(null,meal.id)}>-</button>
+                                    <button onClick={increaseHandler.bind(null,meal.id)}>+</button>
                                 </div>
                             </div>
                         ))
@@ -58,7 +59,7 @@ const Overlay = (props) =>{
                 </div>
                 <div className={classes.actions}>
                     <button className={classes.close} onClick={props.onClick}>Close</button>
-                    <button className={classes.order} onClick={orderHandler}>Order</button>
+                    {hasItems &&<button className={classes.order} onClick={orderHandler}>Order</button>}
                 </div>
             </div>
         </React.Fragment>
