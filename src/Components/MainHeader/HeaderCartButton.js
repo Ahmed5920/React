@@ -20,7 +20,7 @@ const HeaderCartButton = (props) =>{
         },300)
     },[dataMeal])
     return (
-        <button className={btnclasses} onClick={props.onClick}>
+        <button className={btnclasses} onClick={props.onOpenCart}>
             <span><CartIcon/></span>
             <span>Your Cart</span>
             <span className={classes.count}>{ctx.total}</span>

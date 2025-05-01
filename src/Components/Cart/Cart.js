@@ -2,9 +2,10 @@ import React ,{ useContext, useEffect, useState } from "react";
 import CartTotalContext from "../../store/cart-total-context";
 import classes from "./Cart.module.css";
 import { createPortal } from "react-dom";
+import CartForm from "../form/CartForm";
 
 const Backdrop = (props) =>{
-    return <div className={classes.backdrop} onClick={props.onClick}></div>
+    return <div className={classes.backdrop} onClick={props.onCloseCart}></div>
 }
 
 const Overlay = (props) =>{
@@ -25,10 +26,6 @@ const Overlay = (props) =>{
 
     const decreaseHandler = (id) =>{
         ctx.updateMealAmount(id,-1)
-    }
-
-    const orderHandler= () =>{
-        console.log("Oredering...");
     }
 
     return (
@@ -58,18 +55,27 @@ const Overlay = (props) =>{
                     <span>${total.toFixed(2)}</span>
                 </div>
                 <div className={classes.actions}>
-                    <button className={classes.close} onClick={props.onClick}>Close</button>
-                    {hasItems &&<button className={classes.order} onClick={orderHandler}>Order</button>}
+                    <button className={classes.close} onClick={props.onCloseCart}>Close</button>
+                    {hasItems &&<button className={classes.order} onClick={props.onOpenForm}>Order</button>}
                 </div>
             </div>
         </React.Fragment>
     );
 }
 const Cart = (props) =>{
-    return(
+    const [showForm,setShowForm] = useState(false);
+
+    const openFormHandler = () =>{
+        setShowForm(true);
+    }
+    const clseFormHandler = () =>{
+        setShowForm(false);
+    }
+    return( 
         <React.Fragment>
-            {createPortal(<Backdrop onClick={props.onClick}/> , document.getElementById('backdrop-root'))}
-            {createPortal(<Overlay onClick={props.onClick}/>,document.getElementById('overlay-root'))}
+            {createPortal(<Backdrop onCloseCart={props.onCloseCart}/> , document.getElementById('backdrop-root'))}
+            {createPortal(<Overlay onCloseCart={props.onCloseCart} onOpenForm = {openFormHandler}/>,document.getElementById('overlay-root'))}
+            {showForm && <CartForm onCloseForm = {clseFormHandler}/>}
         </React.Fragment>
     )
 }
