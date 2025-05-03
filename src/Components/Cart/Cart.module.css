@@ -82,6 +82,13 @@
   cursor: pointer;
 }
 
+.buttons button.deleteIcon {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
 .total {
   display: flex;
   justify-content: space-between;

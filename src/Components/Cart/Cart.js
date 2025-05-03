@@ -3,6 +3,7 @@ import CartTotalContext from "../../store/cart-total-context";
 import classes from "./Cart.module.css";
 import { createPortal } from "react-dom";
 import CartForm from "../form/CartForm";
+import DeleteIcon from "./DeleteIcon";
 
 const Backdrop = (props) =>{
     return <div className={classes.backdrop} onClick={props.onCloseCart}></div>
@@ -27,6 +28,10 @@ const Overlay = (props) =>{
 
     const decreaseHandler = (id) =>{
         ctx.updateMealAmount(id,-1)
+    }
+    
+    const deleteItemHandler = (id) =>{
+        ctx.deleteMeal(id);
     }
 
     const orderHandling = () =>{
@@ -55,6 +60,9 @@ const Overlay = (props) =>{
                                 <div className={classes.buttons}>
                                     <button onClick={decreaseHandler.bind(null,meal.id)}>-</button>
                                     <button onClick={increaseHandler.bind(null,meal.id)}>+</button>
+                                    <button onClick={deleteItemHandler.bind(null,meal.id)} className={classes.deleteIcon}>
+                                        <DeleteIcon/>
+                                    </button>
                                 </div>
                             </div>
                         ))

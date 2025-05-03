@@ -43,6 +43,23 @@ export const CartTotalContextProvider = (props) => {
     })
   }
 
+  const totalHandler = () =>{
+    const allAmount = dataMeal.reduce((acc,meal) =>(acc + meal.amount),0);
+    setTotal(allAmount);
+  }
+
+  const deleteMeal = (id) =>{
+    setDataMeal((prevState) =>{
+      return (prevState.map((meal) => (
+        meal.id === id ? {...meal,amount: meal.amount = 0} : meal
+      )).filter((ele) => {
+        return (ele.amount > 0) ;
+      }));
+    })
+    totalHandler();
+  }
+
+
   return (
     <CartTotalContext.Provider
       value={{
@@ -50,7 +67,8 @@ export const CartTotalContextProvider = (props) => {
         addTotal: addTotalHandler,
         dataHandler: dataMealHandler,
         dataMeal: dataMeal,
-        updateMealAmount: updateMealAmount
+        updateMealAmount: updateMealAmount,
+        deleteMeal
       }}
     >
       {props.children}
