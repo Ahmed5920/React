@@ -1,8 +1,10 @@
+import useHttp from "../../hooks/use-http";
 import CartTotalContext from "../../store/cart-total-context";
 import classes from "./ItemsData.module.css";
 import { useContext, useState } from "react";
 
 const ItemsData = (props) => {
+  const {isLoading}=useHttp();
   const [AmountNo, setAmountNo] = useState("1");
   const ctxCart = useContext(CartTotalContext);
 

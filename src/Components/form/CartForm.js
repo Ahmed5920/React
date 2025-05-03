@@ -1,8 +1,11 @@
+import useHttp from "../../hooks/use-http";
 import useInput from "../../hooks/use-input";
 import "../form/CartForm.css";
 
 const CartForm = (props) => {
   const isNotEmpty = (value) => value.trim() !== "";
+  const {sendRequest:sendDataRequest} = useHttp();
+  let userData = null;
   const {
     input: firstName,
     inputIsValid: firstNameIsValid,
@@ -47,18 +50,17 @@ const CartForm = (props) => {
     inputBlurHandler: mobileNumberBlurHandler,
     reset: mobileNumberReset,
   } = useInput((value) => value.trim() !== "" && value.trim().length === 11);
-
+  
   let formIsValid = false;
-
-  if (
-    firstNameIsValid &&
-    lastNameIsValid &&
-    emailIsValid &&
-    mobileNumberIsValid &&
-    addressIsValid
-  ) {
-    formIsValid = true;
-  }
+    if (
+      firstNameIsValid &&
+      lastNameIsValid &&
+      emailIsValid &&
+      mobileNumberIsValid &&
+      addressIsValid
+    ) {
+      formIsValid=true;
+    }
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -66,22 +68,35 @@ const CartForm = (props) => {
     if(!formIsValid){
       return;
     }
-    const userData = {
+    userData = {
       firstName,
       lastName,
       email,
       address,
-      mobileNumber
+      mobileNumber,
+      order:props.order
     }
-    console.log("Oredering...")
     props.onCloseForm();
+    sendFormDataHandler();
 
     firstNameReset();
     lastNameReset();
     emailReset();
     mobileNumberReset();
     addressReset();
+    formIsValid=false;
   };
+
+  const sendFormDataHandler = async() =>{
+    await sendDataRequest ({
+      url:"https://meals-ecec2-default-rtdb.firebaseio.com/users.json",
+      method:"POST",
+      body:userData,
+      headers : {
+        'Content-Type': 'application/json',
+      }
+    },()=>{})
+  }
 
   const firstNameInputClass = firstNameHasError
     ? "form-control invalid"

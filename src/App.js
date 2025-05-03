@@ -4,7 +4,6 @@ import MainHeader from './Components/MainHeader/MainHeader';
 import Cart from './Components/Cart/Cart';
 import { CartTotalContextProvider } from './store/cart-total-context';
 import { useState } from 'react';
-import CartForm from './Components/form/CartForm';
 
 function App() {
   const[showCart,setShowCart] = useState(false);
@@ -22,7 +21,6 @@ function App() {
         <main>
           {showCart && <Cart onCloseCart = {closeCartHandler}/>}
           <ItemsList/>
-          {/* <CartForm/> */}
         </main>
       </CartTotalContextProvider>
   )

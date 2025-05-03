@@ -66,6 +66,15 @@
     background: #8a2b06;
     color: white;
   }
+  
+  .order:disabled,
+  .order:disabled:hover,
+  .order:disabled:active {
+    background-color: #ccc;
+    border-color: #ccc;
+    color: #262627;
+    cursor: not-allowed;
+  }
 
 .invalid input {
   border: 1px solid #b40e0e;
